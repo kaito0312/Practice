@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js" integrity="sha256-XmdRbTre/3RulhYk/cOBUMpYlaAp2Rpo/s556u0OIKk=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>Hello <span id="userName"></span></h1>
+    <form action="/api/upload" method="post" enctype="multipart/form-data" id="uoloadForm">
+        <input type="file" name="f1">
+        <input type="submit" value="upload"><br>
+        <input type="button" value="Ajax Upload" id="btnAUP">
+    </form>
+    <script>
+        axios.get('/api/get', {
+            params: {
+                id: 5,
+                key: "ab123"
+            }
+        }).then(function(res) {
+            userName.innerText = res.data.name;
+        }).catch(function(err) {
+            console.log(err)
+        })
+
+        axios.post('/api/post', {
+            name: "Marry",
+            job: "student"
+        })
+
+        btnAUP.addEventListener('click', function() {
+            var formData = new FormData(uoloadForm)
+            axios.post('/api/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
